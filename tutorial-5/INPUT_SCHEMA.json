@@ -1,0 +1,42 @@
+{
+  "title": "Actor input schema",
+  "description": "This is actor input schema",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "memory": {
+      "title": "Memory",
+      "type": "integer",
+      "description": "Calls the main actor with this amount of memory",
+      "default": 1024,
+      "editor": "number",
+      "prefill": 1024,
+      "maximum": 4096,
+      "minimum": 1024
+    },
+    "useClient": {
+      "title": "Use API client",
+      "type": "boolean",
+      "description": "Use API client or not",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "fields": {
+      "title": "Required fields",
+      "type": "array",
+      "description": "Fields will be in the saved dataset",
+      "default": ["title", "url", "price"],
+      "prefill": ["title", "url", "price"], 
+      "editor": "stringList"
+    },
+    "maxItems": {
+      "title": "Max saved items",
+      "type": "integer",
+      "description": "Max amount of item to be saved",
+      "default": 10,
+      "prefill": 10,
+      "editor": "number"
+    }
+  },
+  "required": []
+}
