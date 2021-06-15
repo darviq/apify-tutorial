@@ -3,10 +3,10 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "test": {
-            "title": "Test",
+        "keyword": {
+            "title": "Keyword",
             "type": "string",
-            "description": "There is testing input field description.",
+            "description": "Input query for scraping search.",
             "editor": "textfield"
         }
     },
