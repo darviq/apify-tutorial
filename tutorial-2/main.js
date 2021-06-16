@@ -41,12 +41,15 @@ Apify.main(async () => {
         requestQueue,
         proxyConfiguration,
         useSessionPool: true,
+        persistCookiesPerSession: true,
         sessionPoolOptions: {
             maxPoolSize: 100,
+            sessionOptions: {
+                maxUsageCount: 5,
+            },
         },
         handlePageTimeoutSecs: 10000,
-        persistCookiesPerSession: true,
-        maxConcurrency: 3,
+        maxConcurrency: 1,
         launchContext: {
             launchOptions: {
                 headless: false,
