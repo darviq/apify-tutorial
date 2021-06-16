@@ -1,35 +1,17 @@
-# Empty project
+What is the relationship between actor and task?
+A task is a case of an actor's execution. Most often with predefined parameters.
 
-This template is useful when you're already familiar with the Apify SDK and want to start
-with a clean slate. It does not include `puppeteer` or `playwright` so install them manually
-and update the Dockerfile if you need them.
+What are the differences between default (unnamed) and named storage? Which one would you choose for everyday usage?
+All storages are created without a name (with only an ID). If you want to preserve a storage, simply give it a name and it will be retained indefinitely. I would choose named storages for everyday use because it makes easier verifying of using the correct store.
 
-If you're looking for examples or want to learn more visit:
+What is the relationship between the Apify API and the Apify client? Are there any significant differences?
+Apify API client allows to access from any Node.js application, while Apify API allows to access programmatically using HTTP requests. They're pretty much the same under the hood.
 
-- [Tutorial](https://sdk.apify.com/docs/guides/getting-started)
-- [Documentation](https://sdk.apify.com/docs/api/apify)
-- [Examples](https://sdk.apify.com/docs/examples/crawl-multiple-urls)
+Is it possible to use a request queue for deduplication of product IDs? If yes, how would you do that?
+Deduplication is performed automatically. If the url contains a product identifier, then deduplication will also be performed automatically for it.
 
-## Documentation reference
+What is data retention and how does it work for all types of storage (default and named)?
+This is the storage of data in the chosen data storage and format. Nameless storage is stored for 14 days, named - permanently.
 
-- [Apify SDK](https://sdk.apify.com/)
-- [Apify Actor documentation](https://docs.apify.com/actor)
-- [Apify CLI](https://docs.apify.com/cli)
-
-## Writing a README
-
-See our tutorial on [writing READMEs for your actors](https://help.apify.com/en/articles/2912548-how-to-write-great-readme-for-your-actors) if you need more inspiration.
-
-### Table of contents
-
-If your README requires a table of contents, use the template below and make sure to keep the `<!-- toc start -->` and `<!-- toc end -->` markers.
-
-<!-- toc start -->
-- Introduction
-- Use Cases
-  - Case 1
-  - Case 2
-- Input
-- Output
-- Miscellaneous
- <!-- toc end -->
+How do you pass input when running an actor or task via the API?
+By the POST payload.
