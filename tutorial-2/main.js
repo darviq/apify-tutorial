@@ -15,6 +15,7 @@ Apify.main(async () => {
         },
     });
     const router = tools.createRouter({ requestQueue });
+    const statistics = (await Apify.getValue("statistics")) || {};
 
     const handlePageFunction = async (context) => {
         const { request, page, session } = context;
@@ -34,7 +35,7 @@ Apify.main(async () => {
                 throw err;
             }
         }
-        await router(label, context);
+        await router(label, context, statistics);
     };
 
     const crawler = new Apify.PuppeteerCrawler({
@@ -49,14 +50,26 @@ Apify.main(async () => {
             },
         },
         handlePageTimeoutSecs: 10000,
-        maxConcurrency: 1,
+        maxConcurrency: 3,
         launchContext: {
+            useChrome: true,
             launchOptions: {
                 headless: false,
             },
         },
         handlePageFunction,
     });
+
+    Apify.events.on("migrating", () => {
+        Apify.setValue("statistics", statistics);
+    });
+
+    const statisticsInterval = setInterval(async () => {
+        console.log(statistics);
+        if (await requestQueue.isFinished()) {
+            clearInterval(statisticsInterval);
+        }
+    }, 20000);
 
     await crawler.run();
 });

@@ -103,8 +103,12 @@ exports.OFFERS_PAGE_HANDLER = async ({ request, page }, { requestQueue }) => {
     }
 };
 
-exports.OFFERS_LIST_HANDLER = async ({ request, page }) => {
-    const { title, url, description, keyword } = request.userData;
+exports.OFFERS_LIST_HANDLER = async (
+    { request, page },
+    { requestQueue },
+    statistics
+) => {
+    const { asin, title, url, description, keyword } = request.userData;
     const offers = await page.$$eval("#aod-offer", ($offers) => {
         const data = [];
         $offers.forEach(($offer) => {
@@ -137,13 +141,18 @@ exports.OFFERS_LIST_HANDLER = async ({ request, page }) => {
 
     offers.forEach((offer) => {
         Apify.pushData({
-            title: title,
-            url: url,
-            description: description,
-            keyword: keyword,
+            title,
+            url,
+            description,
+            keyword,
             sellerName: offer.sellerName,
             price: offer.price,
             shippingPrice: offer.shippingPrice,
         });
     });
+    if (offers.length > 0) {
+        (await statistics[asin])
+            ? (statistics[asin] += offers.length)
+            : (statistics[asin] = offers.length);
+    }
 };
