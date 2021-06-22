@@ -1,14 +1,14 @@
 What types of proxies does the Apify Proxy include? What are the main differences between them?
-Apify Proxy provides access to both residential and datacenter IP addresses. Datacenter IPs are fast and cheap, but might be blocked by target websites. Residential IPs are more expensive and harder to block.
+Apify Proxy provides access to residential and datacenter IP addresses and to Google SERP proxy. Datacenter IPs are fast and cheap, but might be blocked by target websites. Residential IPs are more expensive and harder to block. Google SERP proxy – download and extract data from Google Search engine result pages (SERPs).
 
 Which proxies (proxy groups) can users access with the Apify Proxy trial? How long does this trial last?
-The free trial gives access to a pool of IP addresses normally only available for the paid Freelancer subscription plan. Free trial of Apify Proxy last for 30 days.
+The free trial gives access to a pool of IP addresses normally only available for the paid Freelancer subscription plan - datacenter proxies. Free trial of Apify Proxy last for 30 days.
 
 How can you prevent a problem that one of the hardcoded proxy groups that a user is using stops working (a problem with a provider)? What should be the best practices?
-It is necessary to control the frequency of requests, change addresses quite often within a session, control traffic, and so on. This is a whole complex of things. In each case, it may differ.
+It is necessary to use session pool. But also you can control the frequency of requests, control traffic, and so on.
 
 Does it make sense to rotate proxies when you are logged in?
-It is best to keep the same proxy.
+It is best to keep the same proxy. A real user cannot constantly perform actions from different addresses.
 
 Construct a proxy URL that will select proxies only from the US (without specific groups).
 http://country-US:1234567890@proxy.apify.com:8000

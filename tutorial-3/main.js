@@ -2,31 +2,32 @@ const Apify = require("apify");
 const axios = require("axios");
 
 Apify.main(async () => {
-    const { resource } = await Apify.getInput();
-    const datasetId = resource.defaultDatasetId;
-    const allOffers = await axios
-        .get(`https://api.apify.com/v2/datasets/${datasetId}/items?format=json`)
-        .then((res) => res.data);
-    const modelURLs = [];
+    const {
+        resource: { defaultDatasetId },
+    } = await Apify.getInput();
+
+    const { data: allOffers } = await axios.get(
+        `https://api.apify.com/v2/datasets/${defaultDatasetId}/items?format=json`
+    );
+
+    const cheapestOffers = {};
+
     allOffers.forEach((offer) => {
-        modelURLs.every((modelURL) => modelURL !== offer.url) &&
-            modelURLs.push(offer.url);
+        const { price, url } = offer;
+
+        if (!cheapestOffers[url]) cheapestOffers[url] = offer;
+        else if (
+            Number.parseFloat(price.slice(1).replace(",", "")) <
+            Number.parseFloat(
+                cheapestOffers[url].price.slice(1).replace(",", "")
+            )
+        )
+            cheapestOffers[url] = offer;
     });
 
-    const cheapestOffers = modelURLs.map((modelURL) => {
-        let cheapOffer = allOffers.find((offer) => offer.url === modelURL);
-        allOffers.forEach((offer) => {
-            if (
-                offer.url === modelURL &&
-                Number.parseFloat(offer.price.slice(1).replace(",", "")) <
-                    Number.parseFloat(
-                        cheapOffer.price.slice(1).replace(",", "")
-                    )
-            ) {
-                cheapOffer = offer;
-            }
-        });
-        return cheapOffer;
-    });
-    await Apify.pushData(cheapestOffers);
+    const data = [];
+    for (const key in cheapestOffers) {
+        data.push(cheapestOffers[key]);
+    }
+    await Apify.pushData(data);
 });

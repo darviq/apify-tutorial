@@ -1,8 +1,8 @@
 Where and how can you use JQuery with the SDK?
-I can use Cheerio with Node.js like jQuery for manipulating the DOM of a HTML page. Mostly to select the right elements and extract their text values.
+Cheerio offers API for manipulating the DOM of a HTML page, but not in a browser - only from Crawler of CheerioCrawler. It's API is very similar to jQuery API for Node.js, including even the $ object. I can use it mostly to select the right elements and extract their text values.
 
 What is the main difference between Cheerio and JQuery?
-jQuery runs in a browser and attaches directly to the browser's DOM. CheerioCrawler provide HTTP response to Cheerio for parsing.
+As Cheerio doesn’t have JQuery API, it provides HTTP response to Cheerio for parsing CheerioCrawler, while jQuery runs in a browser and attaches directly to the browser's DOM.
 
 When would you use CheerioCrawler and what are its limitations?
 When it needs to do high workloads. CheerioCrawler can scrape 500 or more pages a minute.
@@ -17,4 +17,4 @@ How can you extract data from a page in Puppeteer without using JQuery?
 By using plain JS functions like querySelector.
 
 What is the default concurrency/parallelism the SDK uses?
-By default, the max amount of memory to be used is set to one quarter of total system memory.
+By default, the max amount of memory to be used is set to one quarter of total system memory. If we hadn't set minConcurrency parameter before, it will scale up automatically. maxConcurrency and desiredConcurrency default values equal minConcurrency.
